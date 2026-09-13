@@ -1,9 +1,9 @@
-import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef } from 'react';
+import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef, useState } from 'react';
 import gsap from 'gsap';
 import './CardSwap.css';
 
 export const Card = forwardRef(({ customClass, ...rest }, ref) => (
-  <div ref={ref} {...rest} className={`card ${customClass ?? ''} ${rest.className ?? ''}`.trim()} />
+  <div ref={ref} {...rest} className={`card-swap-card ${customClass ?? ''} ${rest.className ?? ''}`.trim()} />
 ));
 Card.displayName = 'Card';
 
@@ -34,6 +34,9 @@ const CardSwap = ({
   delay = 5000,
   pauseOnHover = false,
   onCardClick,
+  activeIndex: controlledActiveIndex,
+  onActiveIndexChange,
+  autoPlay = false,
   skewAmount = 6,
   easing = 'elastic',
   children
@@ -69,15 +72,23 @@ const CardSwap = ({
   const tlRef = useRef(null);
   const intervalRef = useRef();
   const container = useRef(null);
+  const selectRef = useRef(null);
+  const [internalActiveIndex, setInternalActiveIndex] = useState(0);
 
   useEffect(() => {
     const total = refs.length;
     refs.forEach((r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
 
-    const swap = () => {
+    const swapTo = targetIndex => {
       if (order.current.length < 2) return;
 
+      // Normalize any interrupted transition before handling the next tab.
+      tlRef.current?.kill();
+      order.current.forEach((idx, i) => placeNow(refs[idx].current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
       const [front, ...rest] = order.current;
+      const target = ((targetIndex % total) + total) % total;
+      if (front === target) return;
+      const promoted = [target, ...rest.filter(idx => idx !== target)];
       const elFront = refs[front].current;
       const tl = gsap.timeline();
       tlRef.current = tl;
@@ -89,7 +100,7 @@ const CardSwap = ({
       });
 
       tl.addLabel('promote', `-=${config.durDrop * config.promoteOverlap}`);
-      rest.forEach((idx, i) => {
+      promoted.forEach((idx, i) => {
         const el = refs[idx].current;
         const slot = makeSlot(i, cardDistance, verticalDistance, refs.length);
         tl.set(el, { zIndex: slot.zIndex }, 'promote');
@@ -128,22 +139,40 @@ const CardSwap = ({
       );
 
       tl.call(() => {
-        order.current = [...rest, front];
+        order.current = [...promoted, front];
+        setInternalActiveIndex(target);
+        onActiveIndexChange?.(target);
       });
     };
 
-    swap();
-    intervalRef.current = window.setInterval(swap, delay);
+    const initial = Math.max(0, Math.min(total - 1, Number.isInteger(controlledActiveIndex) ? controlledActiveIndex : internalActiveIndex));
+    order.current = [initial, ...Array.from({ length: total }, (_, i) => i).filter(i => i !== initial)];
+    order.current.forEach((idx, i) => placeNow(refs[idx].current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
+    selectRef.current = target => {
+      const normalized = ((target % total) + total) % total;
+      const position = order.current.indexOf(normalized);
+      if (position <= 0) return;
+      swapTo(normalized);
+    };
+    if (autoPlay) intervalRef.current = window.setInterval(() => selectRef.current?.((order.current[0] + 1) % total), delay);
+
+    const node = container.current;
+    const visibilityObserver = typeof IntersectionObserver !== 'undefined' && node
+      ? new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) tlRef.current?.play();
+          else tlRef.current?.pause();
+        }, { threshold: 0.05 })
+      : null;
+    visibilityObserver?.observe(node);
 
     if (pauseOnHover) {
-      const node = container.current;
       const pause = () => {
         tlRef.current?.pause();
         clearInterval(intervalRef.current);
       };
       const resume = () => {
         tlRef.current?.play();
-        intervalRef.current = window.setInterval(swap, delay);
+        if (autoPlay) intervalRef.current = window.setInterval(() => selectRef.current?.((order.current[0] + 1) % total), delay);
       };
       node.addEventListener('mouseenter', pause);
       node.addEventListener('mouseleave', resume);
@@ -151,11 +180,17 @@ const CardSwap = ({
         node.removeEventListener('mouseenter', pause);
         node.removeEventListener('mouseleave', resume);
         clearInterval(intervalRef.current);
+        tlRef.current?.kill();
+        visibilityObserver?.disconnect();
       };
     }
-    return () => clearInterval(intervalRef.current);
+    return () => { clearInterval(intervalRef.current); tlRef.current?.kill(); visibilityObserver?.disconnect(); selectRef.current = null; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
+  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, autoPlay]);
+
+  useEffect(() => {
+    if (Number.isInteger(controlledActiveIndex)) selectRef.current?.(controlledActiveIndex);
+  }, [controlledActiveIndex]);
 
   const rendered = childArr.map((child, i) =>
     isValidElement(child)
@@ -166,6 +201,7 @@ const CardSwap = ({
           onClick: e => {
             child.props.onClick?.(e);
             onCardClick?.(i);
+            selectRef.current?.(i);
           }
         })
       : child

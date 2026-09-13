@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import './BounceCards.css';
 
@@ -17,24 +17,38 @@ export default function BounceCards({
     'rotate(-10deg) translate(85px)',
     'rotate(2deg) translate(170px)'
   ],
-  enableHover = false
+  enableHover = false,
+  startOnView = false,
+  viewThreshold = 0.2,
+  reducedMotion = false
 }) {
   const containerRef = useRef(null);
+  const [inView, setInView] = useState(!startOnView);
+
   useEffect(() => {
+    if (!startOnView || !containerRef.current || typeof IntersectionObserver === 'undefined') {
+      if (startOnView) setInView(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true);
+        observer.disconnect();
+      }
+    }, { threshold: viewThreshold, rootMargin: '0px 0px -8% 0px' });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [startOnView, viewThreshold]);
+
+  useEffect(() => {
+    if (!inView) return undefined;
+    const reduce = reducedMotion || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.card',
-        { scale: 0 },
-        {
-          scale: 1,
-          stagger: animationStagger,
-          ease: easeType,
-          delay: animationDelay
-        }
-      );
+      gsap.set('.bounce-card', { scale: reduce ? 1 : 0 });
+      if (!reduce) gsap.to('.bounce-card', { scale: 1, stagger: animationStagger, ease: easeType, delay: animationDelay });
     }, containerRef);
     return () => ctx.revert();
-  }, [animationStagger, easeType, animationDelay]);
+  }, [inView, animationStagger, easeType, animationDelay, reducedMotion]);
 
   const getNoRotationTransform = transformStr => {
     const hasRotate = /rotate\([\s\S]*?\)/.test(transformStr);
@@ -65,7 +79,7 @@ export default function BounceCards({
     const q = gsap.utils.selector(containerRef);
 
     images.forEach((_, i) => {
-      const target = q(`.card-${i}`);
+      const target = q(`.bounce-card-${i}`);
       gsap.killTweensOf(target);
 
       const baseTransform = transformStyles[i] || 'none';
@@ -102,7 +116,7 @@ export default function BounceCards({
     const q = gsap.utils.selector(containerRef);
 
     images.forEach((_, i) => {
-      const target = q(`.card-${i}`);
+      const target = q(`.bounce-card-${i}`);
       gsap.killTweensOf(target);
       const baseTransform = transformStyles[i] || 'none';
       gsap.to(target, {
@@ -127,14 +141,14 @@ export default function BounceCards({
       {images.map((src, idx) => (
         <div
           key={idx}
-          className={`card card-${idx}`}
+          className={`bounce-card bounce-card-${idx}`}
           style={{
             transform: transformStyles[idx] ?? 'none'
           }}
           onMouseEnter={() => pushSiblings(idx)}
           onMouseLeave={resetSiblings}
         >
-          <img className="image" src={src} alt={`card-${idx}`} />
+          <img className="bounce-image" src={src} alt={`project-card-${idx + 1}`} />
         </div>
       ))}
     </div>
