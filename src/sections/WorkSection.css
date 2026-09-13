@@ -7,7 +7,7 @@
 .work-section__heading h2 em { color: #8d879e; font-style: normal; }
 .work-section__heading p { max-width: 320px; margin: 0 3% 7px 0; color: #8f8b99; font-size: 14px; line-height: 1.75; }
 .work-section__grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1fr); gap: clamp(34px, 5.2vw, 88px); align-items: stretch; }
-.work-section__visual { min-width: 0; min-height: 590px; padding: 19px 22px 17px; border: 1px solid rgba(183,159,236,.19); background: linear-gradient(145deg, rgba(20,17,31,.82), rgba(9,9,13,.78)); }
+.work-section__visual { min-width: 0; min-height: 590px; padding: 19px 22px 17px; border: 1px solid rgba(183,159,236,.19); background: rgba(10,8,16,.52); }
 .work-section__visual-kicker, .work-section__visual-foot { display: flex; justify-content: space-between; color: #686274; font: 9px/1.4 'DM Mono', monospace; letter-spacing: .12em; }
 .work-section__visual-kicker b { color: #bca7f8; font-weight: 400; }
 .work-section__bounce-frame { position: relative; height: 490px; margin: 12px -5px 0; overflow: hidden; container-type: inline-size; }
@@ -16,7 +16,7 @@
 .work-section__bounce .bounce-image { filter: saturate(.46) contrast(1.08) brightness(.76); }
 .work-section__visual-foot { padding-top: 12px; border-top: 1px solid rgba(183,159,236,.13); }
 .work-section__details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid rgba(183,159,236,.19); border-left: 1px solid rgba(183,159,236,.19); }
-.work-section__spotlight { min-width: 0; min-height: 294px; padding: 0 !important; border: 0 !important; border-right: 1px solid rgba(183,159,236,.19) !important; border-bottom: 1px solid rgba(183,159,236,.19) !important; border-radius: 0 !important; background: rgba(11,10,16,.64) !important; overflow: hidden; }
+.work-section__spotlight { min-width: 0; min-height: 294px; padding: 0 !important; border: 0 !important; border-right: 1px solid rgba(183,159,236,.19) !important; border-bottom: 1px solid rgba(183,159,236,.19) !important; border-radius: 0 !important; background: rgba(11,10,16,.46) !important; overflow: hidden; }
 .work-section__spotlight::before { opacity: 0; transition: opacity .45s ease; }
 .work-section__spotlight:hover::before { opacity: .8; }
 .work-section__project { min-height: 294px; padding: 21px 24px 25px; display: flex; flex-direction: column; }
