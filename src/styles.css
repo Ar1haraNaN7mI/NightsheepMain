@@ -45,7 +45,7 @@
 
 /* Live hero visual */
 .hero-visual{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
-.hero-wordmark{display:block;position:absolute;z-index:2;left:50%;top:47%;width:190vw;transform:translate(-50%,-50%);white-space:nowrap;text-align:center;filter:blur(8px);opacity:.72;mix-blend-mode:screen;animation:word-drift 11s ease-in-out infinite alternate,word-flicker 7s steps(1,end) infinite}
+.hero-wordmark{display:block;position:absolute;z-index:2;left:50%;top:47%;width:190vw;transform:translate(-50%,-50%);white-space:nowrap;text-align:center;filter:blur(8px);opacity:.72;mix-blend-mode:screen;animation:hero-drift 11s ease-in-out infinite alternate,word-flicker 7s steps(1,end) infinite}
 .hero-wordmark span{display:inline-block;font-family:MPlus,MiSans,sans-serif;font-size:clamp(110px,15.8vw,304px);font-weight:600;letter-spacing:-.1em;line-height:.8;color:#b8b8b8;text-shadow:-6px 0 rgba(255,40,120,.24),6px 0 rgba(40,210,255,.24),0 0 20px rgba(255,255,255,.3);animation:word-shift 5.5s ease-in-out infinite alternate}
 .hero-wordmark:before,.hero-wordmark:after{content:'NightSheep AI';position:absolute;inset:0;z-index:-1;display:block;font-family:MPlus,MiSans,sans-serif;font-size:clamp(110px,15.8vw,304px);font-weight:600;letter-spacing:-.1em;line-height:.8;opacity:.34;filter:blur(3px);animation:chromatic-drift 4.2s ease-in-out infinite alternate}
 .hero-wordmark:before{color:#eb3a8c;transform:translateX(-7px)}.hero-wordmark:after{color:#42c9ff;transform:translateX(7px);animation-delay:-2.1s}
