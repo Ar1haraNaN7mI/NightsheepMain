@@ -90,10 +90,10 @@ function App() {
         <div className="product-card"><div className="product-art"><div className="product-orbit orbit-a"></div><div className="product-orbit orbit-b"></div><div className="product-dot"></div></div><div className="product-copy"><p className="eyebrow">COMING SOON · C-SIDE</p><h2>智能格式<br />校对 Agent</h2><p>一个只做一件事，但把这件事做到极致的本地化 Agent。等待部署中。</p><a className="button-link" href="#contact">获得内测邀请 <Arrow /></a></div></div>
       </section>
 
-      <section className="contact section-shell" id="contact"><div className="contact-inner"><p className="eyebrow">LET'S MAKE IT REAL</p><h2>下一个难题，<br /><em>从这里开始。</em></h2><a className="contact-button" href="mailto:hello@nightsheep.cn">hello@nightsheep.cn <Arrow external /></a><p className="contact-note">如果你正在寻找本地化 AI 方案、算法开发或全流程产品交付，欢迎直接写信给我们。</p></div></section>
+      <section className="contact section-shell" id="contact"><div className="contact-inner"><p className="eyebrow">LET'S MAKE IT REAL</p><h2>下一个难题，<br /><em>从这里开始。</em></h2><a className="contact-button" href="https://github.com/Ar1haraNaN7mI/NightsheepMain" target="_blank" rel="noreferrer">访问项目仓库 <Arrow external /></a><p className="contact-note">如果你正在寻找本地化 AI 方案、算法开发或全流程产品交付，欢迎通过项目仓库与我们建立联系。</p></div></section>
     </main>
 
-    <footer className="footer"><div className="footer-top"><Logo /><div className="footer-links"><div><span>EXPLORE</span><a href="#about">关于夜羊</a><a href="#work">业务与案例</a><a href="#research">研究动态</a></div><div><span>CONNECT</span><a href="mailto:hello@nightsheep.cn">Email</a><a href="https://github.com/Ar1haraNaN7mI/NightsheepMain" target="_blank" rel="noreferrer">GitHub</a></div><div><span>OFFICE</span><p>北京市海淀区<br />高梁桥斜街 44 号</p></div></div></div><div className="footer-bottom"><span>© 2023—2026 北京夜羊科技有限公司</span><span>Made for the long run <b>✦</b></span></div></footer>
+    <footer className="footer"><div className="footer-top"><Logo /><div className="footer-links"><div><span>EXPLORE</span><a href="#about">关于夜羊</a><a href="#work">业务与案例</a><a href="#research">研究动态</a></div><div><span>CONNECT</span><a href="https://github.com/Ar1haraNaN7mI/NightsheepMain" target="_blank" rel="noreferrer">项目仓库</a><a href="https://melsnow.club/" target="_blank" rel="noreferrer">墨雪网页外包</a></div><div><span>OFFICE</span><p>北京市海淀区<br />高梁桥斜街 44 号</p></div></div></div><div className="footer-bottom"><span>© 2023—2026 北京夜羊科技有限公司</span><span>Made for the long run <b>✦</b></span></div></footer>
   </>
 }
 
