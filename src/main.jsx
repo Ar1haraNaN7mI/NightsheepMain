@@ -50,11 +50,11 @@ function App() {
       <div className="nav-inner">
         <Logo />
         <nav className="desktop-nav" aria-label="主导航">
-          <a href="#products">Kimi</a><a href="#work">Business</a><a href="#contact">API</a><a href="#research">Research</a><a href="#products">Download</a><a href="#contact">Careers</a><a href="#about">About</a>
+          <a href="#products">Agents</a><a href="#work">Business</a><a href="#contact">API</a><a href="#research">Research</a><a href="#products">Download</a><a href="#contact">Careers</a><a href="#about">About</a>
         </nav>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? '关闭菜单' : '打开菜单'}><span></span><span></span></button>
       </div>
-      <div className="mobile-nav"><a href="#products" onClick={() => setMenuOpen(false)}>Kimi</a><a href="#work" onClick={() => setMenuOpen(false)}>Business</a><a href="#contact" onClick={() => setMenuOpen(false)}>API</a><a href="#research" onClick={() => setMenuOpen(false)}>Research</a><a href="#products" onClick={() => setMenuOpen(false)}>Download</a><a href="#contact" onClick={() => setMenuOpen(false)}>Careers</a><a href="#about" onClick={() => setMenuOpen(false)}>About</a></div>
+      <div className="mobile-nav"><a href="#products" onClick={() => setMenuOpen(false)}>Agents</a><a href="#work" onClick={() => setMenuOpen(false)}>Business</a><a href="#contact" onClick={() => setMenuOpen(false)}>API</a><a href="#research" onClick={() => setMenuOpen(false)}>Research</a><a href="#products" onClick={() => setMenuOpen(false)}>Download</a><a href="#contact" onClick={() => setMenuOpen(false)}>Careers</a><a href="#about" onClick={() => setMenuOpen(false)}>About</a></div>
     </header>
 
     <main id="top">
