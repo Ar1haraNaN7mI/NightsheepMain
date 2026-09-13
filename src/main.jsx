@@ -6,6 +6,7 @@ import ShinyText from './components/ShinyText'
 import SpotlightCard from './components/SpotlightCard'
 import ClickSpark from './components/ClickSpark/ClickSpark'
 import DotField from './components/DotField'
+import FadeContent from './components/FadeContent/FadeContent'
 
 const research = [
   { date: '2025.12.12', tag: 'MILESTONE', title: '夜羊科技成立两周年', copy: '两年时间，我们把本地化 AI Agent 送进知识密集型产业。' },
@@ -60,7 +61,13 @@ function App() {
       <ClickSpark sparkColor="#fff" sparkSize={7} sparkRadius={28} sparkCount={10} duration={520} extraScale={1.2}><section className="hero" aria-label="NightSheep AI">
         <DotField className="hero-dotfield" dotRadius={1} dotSpacing={22} cursorRadius={300} bulgeStrength={24} glowRadius={180} sparkle={false} waveAmplitude={0.2} gradientFrom="rgba(255,255,255,.07)" gradientTo="rgba(255,255,255,.015)" glowColor="#fff" />
         <div className="hero-noise"></div>
-        <img className="hero-scene" src="/moonshot-hero.webp" alt="" aria-hidden="true" />
+        <div className="hero-visual" aria-hidden="true">
+          <div className="hero-wordmark"><span>NightSheep AI</span></div>
+          <div className="hero-scanlines"></div>
+          <div className="hero-haze"></div>
+          <div className="lunar-ring"></div>
+          <div className="lunar-glint"></div>
+        </div>
         <div className="hero-cursor" aria-hidden="true"><i></i></div>
         <div className="hero-copy">
           <div className="hero-subtitle"><BlurText text="Seeking the optimal conversion from energy to intelligence" delay={24} animateBy="words" direction="bottom" stepDuration={0.22} /></div>
@@ -72,32 +79,42 @@ function App() {
         </div>
       </section></ClickSpark>
 
+      <FadeContent className="reveal-section" blur duration={900} threshold={0.12}>
       <section className="intro section-shell" id="about">
         <div className="section-label"><span>01</span><span>WHO WE ARE</span></div>
         <div className="intro-grid"><h2>小而高效，<br /><span>直截了当。</span></h2><div className="intro-text"><p>北京夜羊科技有限公司成立于 2023 年。我们相信，真正有价值的智能，不应该只停留在云端的演示里。</p><p>我们为企业和创作者构建可控、可部署、能持续进化的 AI Agent，把过剩的 AI 生产力带到世界每一个角落。</p><a className="text-link" href="#contact">认识夜羊 <Arrow /></a></div></div>
         <div className="stat-row"><div><strong>21<span>+</span></strong><small>正式成员</small></div><div><strong>05</strong><small>核心业务方向</small></div><div><strong>2023</strong><small>北京 · 成立年份</small></div><div><strong>∞</strong><small>智能的可能性</small></div></div>
       </section>
+      </FadeContent>
 
+      <FadeContent className="reveal-section" blur duration={900} delay={80} threshold={0.14}>
       <section className="research section-shell" id="research">
         <div className="section-label"><span>02</span><span>FIELD NOTES</span><a href="#contact">查看全部动态 <Arrow /></a></div>
         <div className="section-heading"><h2>持续研究，<br /><span>持续交付。</span></h2><p>我们把每一次部署当成一次研究，把每一次研究变成真实的能力。</p></div>
         <div className="research-list">{research.map((item, index) => <a className="research-item" href="#work" key={item.title}><span className="research-index">0{index + 1}</span><span className="research-date">{item.date}</span><span className="research-tag">{item.tag}</span><span className="research-title">{item.title}</span><span className="research-copy">{item.copy}</span><Arrow /></a>)}</div>
       </section>
+      </FadeContent>
 
+      <FadeContent className="reveal-section" blur duration={1000} delay={80} threshold={0.12}>
       <section className="work section-shell" id="work">
         <div className="section-label"><span>03</span><span>WHAT WE BUILD</span></div>
         <div className="section-heading"><h2>复杂问题，<br /><span>交给智能。</span></h2><p>从算法到系统，从一个 Agent 到一群 Agent。我们把难事拆开，再让它们重新协作。</p></div>
         <div className="project-list">{projects.map(project => <SpotlightCard key={project.number} className="spotlight-project" spotlightColor="rgba(212,255,79,.16)"><article className="project"><div className="project-top"><span>{project.number}</span><span>{project.type}</span></div><div className="project-body"><p className="project-client">{project.client}</p><h3>{project.name}</h3><p>{project.description}</p><a href="#contact">了解项目 <Arrow /></a></div><div className="project-glow"></div></article></SpotlightCard>)}</div>
       </section>
+      </FadeContent>
 
+      <FadeContent className="reveal-section" blur duration={1000} delay={100} threshold={0.12}>
       <section className="products section-shell" id="products">
         <div className="product-card"><div className="product-art"><div className="product-orbit orbit-a"></div><div className="product-orbit orbit-b"></div><div className="product-dot"></div></div><div className="product-copy"><p className="eyebrow">COMING SOON · C-SIDE</p><h2>智能格式<br />校对 Agent</h2><p>一个只做一件事，但把这件事做到极致的本地化 Agent。等待部署中。</p><a className="button-link" href="#contact">获得内测邀请 <Arrow /></a></div></div>
       </section>
+      </FadeContent>
 
+      <FadeContent className="reveal-section" blur duration={1000} threshold={0.15}>
       <section className="contact section-shell" id="contact"><div className="contact-inner"><p className="eyebrow">LET'S MAKE IT REAL</p><h2>下一个难题，<br /><em>从这里开始。</em></h2><a className="contact-button" href="https://github.com/Ar1haraNaN7mI/NightsheepMain" target="_blank" rel="noreferrer">访问项目仓库 <Arrow external /></a><p className="contact-note">如果你正在寻找本地化 AI 方案、算法开发或全流程产品交付，欢迎通过项目仓库与我们建立联系。</p></div></section>
+      </FadeContent>
     </main>
 
-    <footer className="footer"><div className="footer-top"><Logo /><div className="footer-links"><div><span>EXPLORE</span><a href="#about">关于夜羊</a><a href="#work">业务与案例</a><a href="#research">研究动态</a></div><div><span>CONNECT</span><a href="https://github.com/Ar1haraNaN7mI/NightsheepMain" target="_blank" rel="noreferrer">项目仓库</a><a href="https://melsnow.club/" target="_blank" rel="noreferrer">墨雪网页外包</a></div><div><span>OFFICE</span><p>北京市海淀区<br />高梁桥斜街 44 号</p></div></div></div><div className="footer-bottom"><span>© 2023—2026 北京夜羊科技有限公司</span><span>Made for the long run <b>✦</b></span></div></footer>
+    <FadeContent className="reveal-section" blur duration={850} threshold={0.1}><footer className="footer"><div className="footer-top"><Logo /><div className="footer-links"><div><span>EXPLORE</span><a href="#about">关于夜羊</a><a href="#work">业务与案例</a><a href="#research">研究动态</a></div><div><span>CONNECT</span><a href="https://github.com/Ar1haraNaN7mI/NightsheepMain" target="_blank" rel="noreferrer">项目仓库</a><a href="https://melsnow.club/" target="_blank" rel="noreferrer">墨雪网页外包</a></div><div><span>OFFICE</span><p>北京市海淀区<br />高梁桥斜街 44 号</p></div></div></div><div className="footer-bottom"><span>© 2023—2026 北京夜羊科技有限公司</span><span>Made for the long run <b>✦</b></span></div></footer></FadeContent>
   </>
 }
 
