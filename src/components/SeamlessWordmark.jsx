@@ -11,7 +11,7 @@ const particleProps = {
   stagger: 280,
   // Keep the hero wordmark stable while the pointer passes over it. The only
   // dispersion should be the one-time entrance animation from ParticleText.
-  pointerRepel: 0,
+  pointerRepel: 28,
   repelRadius: 150,
   idleDrift: 0.8,
   trigger: 'mount',
@@ -24,4 +24,5 @@ const particleProps = {
 export default function SeamlessWordmark() {
   return <div className="seamless-wordmark" aria-label="NightSheep AI"><div className="seamless-wordmark__track"><div className="seamless-wordmark__item"><ParticleText text="NightSheep AI" {...particleProps} /></div><div className="seamless-wordmark__item" aria-hidden="true"><ParticleText text="NightSheep AI" {...particleProps} /></div></div><span className="seamless-wordmark__sr">NightSheep AI</span></div>
 }
+
 
