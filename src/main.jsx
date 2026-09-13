@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useId, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
-import GradientWaves from './components/GradientWaves'
+import ShapeGrid from './components/ShapeGrid'
 import SeamlessWordmark from './components/SeamlessWordmark'
 import BlurText from './components/BlurText/BlurText'
 import ClickSpark from './components/ClickSpark/ClickSpark'
@@ -28,7 +28,24 @@ const projects = [
 
 const projectImages = ['/projects/xinyu.svg', '/projects/wuxiaofang.svg', '/projects/match.svg', '/projects/agent-os.svg']
 
-function Logo() { return <a className="logo" href="#top" aria-label="夜羊科技首页"><span className="logo-mark" aria-hidden="true"><i /><i /><i /><i /><i /></span><span className="logo-word">NightSheep <b>AI</b></span></a> }
+function Logo() {
+  const clipId = `night-sheep-mark-${useId().replace(/:/g, '')}`
+  return <a className="logo" href="#top" aria-label="夜羊科技首页">
+    <svg className="logo-mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <defs><clipPath id={clipId}><circle cx="24" cy="24" r="23" /></clipPath></defs>
+      <circle cx="24" cy="24" r="23" fill="currentColor" />
+      <g clipPath={`url(#${clipId})`} fill="#05040a">
+        <path d="M-6 7.5C9 14 32 14.8 54 7.1v4.4C32 19.3 9 18.3-6 12z" />
+        <path d="M-7 15.2c17 6.8 38 7.3 56-.2v4.4c-18 7.5-39 7-56 .2z" />
+        <path d="M-7 22.9c18 6.5 38 6.8 56-.1v4.4c-18 6.8-38 6.6-56 .2z" />
+        <path d="M-7 30.6c17 6.4 38 6.5 56-.1v4.4c-18 6.6-39 6.4-56.2.1z" />
+        <path d="M-6 38.3c16 5.9 38 6.2 54-.1v4.4c-17 6.2-39 6-54 .2z" />
+      </g>
+      <circle cx="24" cy="24" r="23" fill="none" stroke="currentColor" strokeWidth="1.25" opacity=".28" />
+    </svg>
+    <span className="logo-word">NightSheep <b>AI</b></span>
+  </a>
+}
 function Arrow({ external = false }) { return <span className="arrow" aria-hidden="true">{external ? '↗' : '→'}</span> }
 
 function CursorDot() {
@@ -54,7 +71,8 @@ function Footer() { return <footer className="site-footer"><div className="site-
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   useEffect(() => { const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 32); window.addEventListener('scroll', onScroll, { passive: true }); return () => window.removeEventListener('scroll', onScroll) }, [])
-  return <><div className="site-background" aria-hidden="true"><GradientWaves className="site-gradient-waves" horizonColor="#080611" waveColor="#241842" crestColor="#8066c8" speed={.18} amplitude={1.7} waveScale={.55} waveRatio={.86} swell={24} turbulence={14} tilt={1.05} zoom={1.06} height={5} fogDepth={12} detail="medium" brightness={.52} opacity={.68} mouseInteraction={false} parallaxStrength={.3} grain={false} /></div><LoadingScreen /><header className={`nav ${menuOpen ? 'menu-open' : ''}`}><div className="nav-inner"><Logo /><nav className="desktop-nav" aria-label="主导航"><a href="#work">Agents</a><a href="#work">Business</a><a href="#products">API</a><a href="#research">Research</a><a href="#products">Download</a><a href="#contact">Careers</a><a href="#about">About</a></nav><button className="menu-toggle" onClick={() => setMenuOpen(value => !value)} aria-label={menuOpen ? '关闭菜单' : '打开菜单'}><span /><span /></button></div><nav className="mobile-nav" aria-label="移动端主导航"><a href="#work" onClick={() => setMenuOpen(false)}>Agents</a><a href="#work" onClick={() => setMenuOpen(false)}>Business</a><a href="#products" onClick={() => setMenuOpen(false)}>API</a><a href="#research" onClick={() => setMenuOpen(false)}>Research</a><a href="#products" onClick={() => setMenuOpen(false)}>Download</a><a href="#contact" onClick={() => setMenuOpen(false)}>Careers</a><a href="#about" onClick={() => setMenuOpen(false)}>About</a></nav></header><main id="top"><Hero /><AboutSection /><ResearchSection items={research} /><WorkSection projects={projects} projectImages={projectImages} /><ProductSection /><ContactSection /></main><Footer /></>
+  return <><div className="site-background" aria-hidden="true"><ShapeGrid className="site-shape-grid" direction="diagonal" speed={.18} borderColor="rgba(164,136,232,.16)" squareSize={86} hoverFillColor="rgba(143,120,197,.18)" shape="square" hoverTrailAmount={0} /></div><LoadingScreen /><header className={`nav ${menuOpen ? 'menu-open' : ''}`}><div className="nav-inner"><Logo /><nav className="desktop-nav" aria-label="主导航"><a href="#work">Agents</a><a href="#work">Business</a><a href="#products">API</a><a href="#research">Research</a><a href="#products">Download</a><a href="#contact">Careers</a><a href="#about">About</a></nav><button className="menu-toggle" onClick={() => setMenuOpen(value => !value)} aria-label={menuOpen ? '关闭菜单' : '打开菜单'}><span /><span /></button></div><nav className="mobile-nav" aria-label="移动端主导航"><a href="#work" onClick={() => setMenuOpen(false)}>Agents</a><a href="#work" onClick={() => setMenuOpen(false)}>Business</a><a href="#products" onClick={() => setMenuOpen(false)}>API</a><a href="#research" onClick={() => setMenuOpen(false)}>Research</a><a href="#products" onClick={() => setMenuOpen(false)}>Download</a><a href="#contact" onClick={() => setMenuOpen(false)}>Careers</a><a href="#about" onClick={() => setMenuOpen(false)}>About</a></nav></header><main id="top"><Hero /><AboutSection /><ResearchSection items={research} /><WorkSection projects={projects} projectImages={projectImages} /><ProductSection /><ContactSection /></main><Footer /></>
 }
 
 createRoot(document.getElementById('root')).render(<App />)
+

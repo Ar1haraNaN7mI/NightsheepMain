@@ -87,6 +87,10 @@ const ParticleText = ({
     let resizeFrame = null;
     let buildId = 0;
     let gathering = false;
+    // The intro scatter/gather is a one-time entrance effect. Keep this flag
+    // across ResizeObserver rebuilds so moving the pointer or a layout resize
+    // never replays the loading animation.
+    let hasGathered = false;
     let gatherStart = 0;
     let reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     let width = 0;
@@ -326,8 +330,20 @@ const ParticleText = ({
           particle.delay = 0;
         });
         gathering = false;
-      } else {
+      } else if (!hasGathered) {
+        hasGathered = true;
         startGather(false);
+      } else {
+        // Re-sampling after a resize should snap to the already assembled
+        // glyph instead of scattering it a second time.
+        particles.forEach(particle => {
+          particle.x = particle.targetX;
+          particle.y = particle.targetY;
+          particle.startX = particle.targetX;
+          particle.startY = particle.targetY;
+          particle.delay = 0;
+        });
+        gathering = false;
       }
 
       ensureRenderLoop();
@@ -414,3 +430,4 @@ const ParticleText = ({
 };
 
 export default ParticleText;
+
