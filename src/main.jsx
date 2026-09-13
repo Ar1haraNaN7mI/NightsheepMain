@@ -21,7 +21,7 @@ const projects = [
 ]
 
 function Logo() {
-  return <a className="logo" href="#top" aria-label="夜羊科技首页"><span className="logo-mark"><i></i><i></i><i></i></span><span>NightSheep<span className="logo-cn">夜羊科技</span></span></a>
+  return <a className="logo" href="#top" aria-label="夜羊科技首页"><span className="logo-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span className="logo-word">NightSheep <b>AI</b></span></a>
 }
 
 function Arrow({ external = false }) { return <span className="arrow" aria-hidden="true">{external ? '↗' : '→'}</span> }
@@ -49,29 +49,27 @@ function App() {
       <div className="nav-inner">
         <Logo />
         <nav className="desktop-nav" aria-label="主导航">
-          <a href="#about">关于夜羊</a><a href="#work">业务</a><a href="#research">研究</a><a href="#products">产品</a><a href="#contact" className="nav-cta">联系团队 <Arrow /></a>
+          <a href="#products">Kimi</a><a href="#work">Business</a><a href="#contact">API</a><a href="#research">Research</a><a href="#products">Download</a><a href="#contact">Careers</a><a href="#about">About</a>
         </nav>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? '关闭菜单' : '打开菜单'}><span></span><span></span></button>
       </div>
-      <div className="mobile-nav"><a href="#about" onClick={() => setMenuOpen(false)}>关于夜羊</a><a href="#work" onClick={() => setMenuOpen(false)}>业务</a><a href="#research" onClick={() => setMenuOpen(false)}>研究</a><a href="#products" onClick={() => setMenuOpen(false)}>产品</a><a href="#contact" onClick={() => setMenuOpen(false)}>联系团队 <Arrow /></a></div>
+      <div className="mobile-nav"><a href="#products" onClick={() => setMenuOpen(false)}>Kimi</a><a href="#work" onClick={() => setMenuOpen(false)}>Business</a><a href="#contact" onClick={() => setMenuOpen(false)}>API</a><a href="#research" onClick={() => setMenuOpen(false)}>Research</a><a href="#products" onClick={() => setMenuOpen(false)}>Download</a><a href="#contact" onClick={() => setMenuOpen(false)}>Careers</a><a href="#about" onClick={() => setMenuOpen(false)}>About</a></div>
     </header>
 
     <main id="top">
-      <ClickSpark sparkColor="#d4ff4f" sparkSize={8} sparkRadius={28} sparkCount={10} duration={520} extraScale={1.2}><section className="hero" aria-labelledby="hero-title">
-        <DotField className="hero-dotfield" dotRadius={1.2} dotSpacing={18} cursorRadius={320} bulgeStrength={34} glowRadius={210} sparkle waveAmplitude={0.4} gradientFrom="rgba(212,255,79,.13)" gradientTo="rgba(255,255,255,.05)" glowColor="#d4ff4f" />
-        <div className="hero-noise"></div><div className="orb orb-one"></div><div className="orb orb-two"></div><div className="orb-core"></div>
+      <ClickSpark sparkColor="#fff" sparkSize={7} sparkRadius={28} sparkCount={10} duration={520} extraScale={1.2}><section className="hero" aria-label="NightSheep AI">
+        <DotField className="hero-dotfield" dotRadius={1} dotSpacing={22} cursorRadius={300} bulgeStrength={24} glowRadius={180} sparkle={false} waveAmplitude={0.2} gradientFrom="rgba(255,255,255,.07)" gradientTo="rgba(255,255,255,.015)" glowColor="#fff" />
+        <div className="hero-noise"></div>
+        <div className="hero-wordmark" aria-hidden="true"><span>NightSheep AI</span></div>
+        <div className="lunar-ring" aria-hidden="true"></div><div className="hero-cursor" aria-hidden="true"><i></i></div>
         <div className="hero-copy">
-          <p className="eyebrow">NIGHTSHEEP TECHNOLOGY · BEIJING</p>
-          <h1 id="hero-title">把智能带回<br /><em><ShinyText text="真实世界" color="#d4ff4f" shineColor="#ffffff" speed={3.5} /></em></h1>
-          <div className="hero-subtitle"><BlurText text="让本地化 AI Agent 赋能知识密集型产业" delay={32} animateBy="words" direction="bottom" stepDuration={0.25} /></div>
+          <div className="hero-subtitle"><BlurText text="Seeking the optimal conversion from energy to intelligence" delay={24} animateBy="words" direction="bottom" stepDuration={0.22} /></div>
           <form className="prompt-box" onSubmit={submitPrompt}>
-            <input value={prompt} onChange={e => { setPrompt(e.target.value); setSent(false) }} placeholder="告诉我们一个难题，我们来一起解决" aria-label="告诉夜羊你的难题" />
+            <input value={prompt} onChange={e => { setPrompt(e.target.value); setSent(false) }} placeholder="Throw me a hard one. I’m ready." aria-label="Tell NightSheep your challenge" />
             <button type="submit" aria-label="发送">{sent ? '✓' : '↑'}</button>
           </form>
-          <div className="hero-links"><a href="#work">探索我们的业务 <Arrow /></a><a href="#contact">与我们合作 <Arrow /></a></div>
           {sent && <p className="prompt-note">收到。留下联系方式，我们会带着答案回来。</p>}
         </div>
-        <div className="scroll-cue"><span>SCROLL TO EXPLORE</span><i></i></div>
       </section></ClickSpark>
 
       <section className="intro section-shell" id="about">
