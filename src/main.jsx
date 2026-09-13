@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
 import BlurText from './components/BlurText/BlurText'
 import ShinyText from './components/ShinyText'
 import SpotlightCard from './components/SpotlightCard'
 import ClickSpark from './components/ClickSpark/ClickSpark'
-import DotField from './components/DotField'
+import AcidSquares from './components/AcidSquares'
 import FadeContent from './components/FadeContent/FadeContent'
+import BounceCards from './components/BounceCards'
+import ParticleText from './components/ParticleText'
 
 const research = [
   { date: '2025.12.12', tag: 'MILESTONE', title: '夜羊科技成立两周年', copy: '两年时间，我们把本地化 AI Agent 送进知识密集型产业。' },
@@ -21,11 +23,34 @@ const projects = [
   { number: '04', client: 'Infound · 法国连续创业团队', name: 'Multi-Agent OS', description: '从产品定义到客户管理系统，全流程交付一套可以持续生长的智能工作台。', type: 'OUTSOURCING / AI' },
 ]
 
+const projectImages = [
+  '/projects/xinyu.svg',
+  '/projects/wuxiaofang.svg',
+  '/projects/match.svg',
+  '/projects/agent-os.svg',
+]
+
 function Logo() {
   return <a className="logo" href="#top" aria-label="夜羊科技首页"><span className="logo-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span className="logo-word">NightSheep <b>AI</b></span></a>
 }
 
 function Arrow({ external = false }) { return <span className="arrow" aria-hidden="true">{external ? '↗' : '→'}</span> }
+
+function CursorDot() {
+  const ref = useRef(null)
+  useEffect(() => {
+    let x = -80, y = -80, tx = -80, ty = -80, frame
+    const move = event => { tx = event.clientX; ty = event.clientY }
+    const tick = () => {
+      x += (tx - x) * 0.16; y += (ty - y) * 0.16
+      if (ref.current) ref.current.style.transform = `translate3d(${x - 22}px,${y - 22}px,0)`
+      frame = requestAnimationFrame(tick)
+    }
+    window.addEventListener('mousemove', move, { passive: true }); frame = requestAnimationFrame(tick)
+    return () => { window.removeEventListener('mousemove', move); cancelAnimationFrame(frame) }
+  }, [])
+  return <span ref={ref} className="cursor-dot" aria-hidden="true"><i /></span>
+}
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -59,16 +84,53 @@ function App() {
 
     <main id="top">
       <ClickSpark sparkColor="#fff" sparkSize={7} sparkRadius={28} sparkCount={10} duration={520} extraScale={1.2}><section className="hero" aria-label="NightSheep AI">
-        <DotField className="hero-dotfield" dotRadius={1} dotSpacing={22} cursorRadius={300} bulgeStrength={24} glowRadius={180} sparkle={false} waveAmplitude={0.2} gradientFrom="rgba(255,255,255,.07)" gradientTo="rgba(255,255,255,.015)" glowColor="#fff" />
+        <AcidSquares
+          className="hero-acid-squares"
+          color1="#080808"
+          color2="#252525"
+          color3="#d4ff4f"
+          detail="medium"
+          speed={0.45}
+          waveDepth={0.8}
+          zoom={1.15}
+          density={9}
+          glow={0.75}
+          exposure={3200}
+          spread={0.28}
+          contrast={1.1}
+          brightness={0.8}
+          opacity={0.36}
+          mouseInteraction={true}
+          mouseStrength={0.14}
+          mouseRadius={0.4}
+          grain={false}
+        />
         <div className="hero-noise"></div>
         <div className="hero-visual" aria-hidden="true">
-          <div className="hero-wordmark"><span>NightSheep AI</span></div>
+          <div className="hero-wordmark">
+            <ParticleText
+              text="NightSheep AI"
+              particleSize={2.1}
+              density={4}
+              color="#f4f4f4"
+              highlightColor="#ffffff"
+              scatter={150}
+              gatherDuration={1500}
+              stagger={280}
+              pointerRepel={34}
+              repelRadius={150}
+              idleDrift={0.8}
+              trigger="hover"
+              fontSize="clamp(7rem, 15.8vw, 19rem)"
+              fontWeight={600}
+              fontFamily="MPlus, MiSans, sans-serif"
+              glow
+            />
+          </div>
           <div className="hero-scanlines"></div>
           <div className="hero-haze"></div>
-          <div className="lunar-ring"></div>
-          <div className="lunar-glint"></div>
         </div>
-        <div className="hero-cursor" aria-hidden="true"><i></i></div>
+        <CursorDot />
         <div className="hero-copy">
           <div className="hero-subtitle"><BlurText text="Seeking the optimal conversion from energy to intelligence" delay={24} animateBy="words" direction="bottom" stepDuration={0.22} /></div>
           <form className="prompt-box" onSubmit={submitPrompt}>
@@ -99,7 +161,29 @@ function App() {
       <section className="work section-shell" id="work">
         <div className="section-label"><span>03</span><span>WHAT WE BUILD</span></div>
         <div className="section-heading"><h2>复杂问题，<br /><span>交给智能。</span></h2><p>从算法到系统，从一个 Agent 到一群 Agent。我们把难事拆开，再让它们重新协作。</p></div>
-        <div className="project-list">{projects.map(project => <SpotlightCard key={project.number} className="spotlight-project" spotlightColor="rgba(212,255,79,.16)"><article className="project"><div className="project-top"><span>{project.number}</span><span>{project.type}</span></div><div className="project-body"><p className="project-client">{project.client}</p><h3>{project.name}</h3><p>{project.description}</p><a href="#contact">了解项目 <Arrow /></a></div><div className="project-glow"></div></article></SpotlightCard>)}</div>
+        <div className="project-showcase">
+          <div className="project-bounce-wrap">
+            <BounceCards
+              className="project-bounce-cards"
+              images={projectImages}
+              containerWidth={560}
+              containerHeight={450}
+              animationDelay={0.25}
+              animationStagger={0.1}
+              enableHover
+              transformStyles={[
+                'rotate(9deg) translate(-190px)',
+                'rotate(4deg) translate(-95px)',
+                'rotate(-3deg)',
+                'rotate(-9deg) translate(95px)',
+              ]}
+            />
+            <p className="project-bounce-caption">SELECTED BUILDS · 2023—2026</p>
+          </div>
+          <div className="project-details">
+            {projects.map(project => <SpotlightCard key={project.number} className="spotlight-project" spotlightColor="rgba(212,255,79,.16)"><article className="project"><div className="project-top"><span>{project.number}</span><span>{project.type}</span></div><div className="project-body"><p className="project-client">{project.client}</p><h3>{project.name}</h3><p>{project.description}</p><a href="#contact">了解项目 <Arrow /></a></div><div className="project-glow"></div></article></SpotlightCard>)}
+          </div>
+        </div>
       </section>
       </FadeContent>
 
