@@ -60,8 +60,8 @@ function App() {
       <ClickSpark sparkColor="#fff" sparkSize={7} sparkRadius={28} sparkCount={10} duration={520} extraScale={1.2}><section className="hero" aria-label="NightSheep AI">
         <DotField className="hero-dotfield" dotRadius={1} dotSpacing={22} cursorRadius={300} bulgeStrength={24} glowRadius={180} sparkle={false} waveAmplitude={0.2} gradientFrom="rgba(255,255,255,.07)" gradientTo="rgba(255,255,255,.015)" glowColor="#fff" />
         <div className="hero-noise"></div>
-        <div className="hero-wordmark" aria-hidden="true"><span>NightSheep AI</span></div>
-        <div className="lunar-ring" aria-hidden="true"></div><div className="hero-cursor" aria-hidden="true"><i></i></div>
+        <img className="hero-scene" src="/moonshot-hero.webp" alt="" aria-hidden="true" />
+        <div className="hero-cursor" aria-hidden="true"><i></i></div>
         <div className="hero-copy">
           <div className="hero-subtitle"><BlurText text="Seeking the optimal conversion from energy to intelligence" delay={24} animateBy="words" direction="bottom" stepDuration={0.22} /></div>
           <form className="prompt-box" onSubmit={submitPrompt}>
