@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
+import BlurText from './components/BlurText/BlurText'
+import ShinyText from './components/ShinyText'
+import SpotlightCard from './components/SpotlightCard'
+import ClickSpark from './components/ClickSpark/ClickSpark'
+import DotField from './components/DotField'
 
 const research = [
   { date: '2025.12.12', tag: 'MILESTONE', title: '夜羊科技成立两周年', copy: '两年时间，我们把本地化 AI Agent 送进知识密集型产业。' },
@@ -52,12 +57,13 @@ function App() {
     </header>
 
     <main id="top">
-      <section className="hero" aria-labelledby="hero-title">
+      <ClickSpark sparkColor="#d4ff4f" sparkSize={8} sparkRadius={28} sparkCount={10} duration={520} extraScale={1.2}><section className="hero" aria-labelledby="hero-title">
+        <DotField className="hero-dotfield" dotRadius={1.2} dotSpacing={18} cursorRadius={320} bulgeStrength={34} glowRadius={210} sparkle waveAmplitude={0.4} gradientFrom="rgba(212,255,79,.13)" gradientTo="rgba(255,255,255,.05)" glowColor="#d4ff4f" />
         <div className="hero-noise"></div><div className="orb orb-one"></div><div className="orb orb-two"></div><div className="orb-core"></div>
         <div className="hero-copy">
           <p className="eyebrow">NIGHTSHEEP TECHNOLOGY · BEIJING</p>
-          <h1 id="hero-title">把智能带回<br /><em>真实世界</em></h1>
-          <p className="hero-subtitle">让本地化 AI Agent 赋能知识密集型产业</p>
+          <h1 id="hero-title">把智能带回<br /><em><ShinyText text="真实世界" color="#d4ff4f" shineColor="#ffffff" speed={3.5} /></em></h1>
+          <div className="hero-subtitle"><BlurText text="让本地化 AI Agent 赋能知识密集型产业" delay={32} animateBy="words" direction="bottom" stepDuration={0.25} /></div>
           <form className="prompt-box" onSubmit={submitPrompt}>
             <input value={prompt} onChange={e => { setPrompt(e.target.value); setSent(false) }} placeholder="告诉我们一个难题，我们来一起解决" aria-label="告诉夜羊你的难题" />
             <button type="submit" aria-label="发送">{sent ? '✓' : '↑'}</button>
@@ -66,7 +72,7 @@ function App() {
           {sent && <p className="prompt-note">收到。留下联系方式，我们会带着答案回来。</p>}
         </div>
         <div className="scroll-cue"><span>SCROLL TO EXPLORE</span><i></i></div>
-      </section>
+      </section></ClickSpark>
 
       <section className="intro section-shell" id="about">
         <div className="section-label"><span>01</span><span>WHO WE ARE</span></div>
@@ -83,7 +89,7 @@ function App() {
       <section className="work section-shell" id="work">
         <div className="section-label"><span>03</span><span>WHAT WE BUILD</span></div>
         <div className="section-heading"><h2>复杂问题，<br /><span>交给智能。</span></h2><p>从算法到系统，从一个 Agent 到一群 Agent。我们把难事拆开，再让它们重新协作。</p></div>
-        <div className="project-list">{projects.map(project => <article className="project" key={project.number}><div className="project-top"><span>{project.number}</span><span>{project.type}</span></div><div className="project-body"><p className="project-client">{project.client}</p><h3>{project.name}</h3><p>{project.description}</p><a href="#contact">了解项目 <Arrow /></a></div><div className="project-glow"></div></article>)}</div>
+        <div className="project-list">{projects.map(project => <SpotlightCard key={project.number} className="spotlight-project" spotlightColor="rgba(212,255,79,.16)"><article className="project"><div className="project-top"><span>{project.number}</span><span>{project.type}</span></div><div className="project-body"><p className="project-client">{project.client}</p><h3>{project.name}</h3><p>{project.description}</p><a href="#contact">了解项目 <Arrow /></a></div><div className="project-glow"></div></article></SpotlightCard>)}</div>
       </section>
 
       <section className="products section-shell" id="products">
